@@ -1,0 +1,8 @@
+*.pdf
+/solution.exe
+/src_solution
+*.vs
+Debug/
+*.VC.Db
+*.vcxproj.user
+/build/vs2015/Debug
