@@ -6,3 +6,4 @@ Debug/
 *.VC.Db
 *.vcxproj.user
 /build/vs2015/Debug
+*.VC.VC.opendb

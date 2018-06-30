@@ -53,15 +53,13 @@ void curve_renderer::sample_curve(int sample_count)
 				   "push_back"-Methode des "samples"-Objektes.
    ****************/
 
+	double t = 0;
 
-	// Remove the following lines
-	double step = (curve->get_max_t() - curve->get_min_t()) / 10;
+	for (int i = 0; i<sample_count; i++) {
 
-	if (step<=0.0)
-		return;
-
-	for (double t=curve->get_min_t(); t<=curve->get_max_t(); t+=step)
-		std::cout<<"t: "<<t<<"   point: "<<curve->evaluate(t)<<std::endl;
+		t = i / static_cast<double>(sample_count - 1)*(curve->get_max_t() - curve->get_min_t());
+		samples.push_back(curve->evaluate(t));
+	}
 }
 
 
@@ -83,6 +81,13 @@ void curve_renderer::render_curve()
                    Sie die "x()"- und "y()"-Methoden eines point2d-Objektes (aus denen
                    die Liste besteht).
    *************/
+
+	glBegin(GL_LINE_STRIP);
+	for (int i = 0; i < (n - 1); i++) {
+		glVertex3d(samples[i].x(), samples[i].y(), 0);
+	}
+	glEnd();
+
 }
 
 
@@ -169,12 +174,15 @@ void curve_renderer::render_basis_functions()
                    koennen.
 	************/
 
+	for (unsigned int i = 0; i<curve->get_control_points().size(); i++) {
 
+		glBegin(GL_LINE_STRIP);
 
-
-
-
-
+		set_basis_color(i);
+		for (double t = 0; t <= t_max; t += t_max / 100)
+			glVertex2d(t, curve->evaluate_basis(i, t));
+		glEnd();
+	}
 
 	glPopMatrix();
 

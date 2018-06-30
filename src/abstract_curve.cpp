@@ -48,6 +48,10 @@ point2d abstract_curve::evaluate(double t)
 				   pnt += 3.0*pnt2;
    **********/
 
+	for (unsigned int i = 0; i<control_points.size(); i++) {
+		sample += evaluate_basis(i, t) * control_points[i];
+	}
+
 	return sample;
 }
 
